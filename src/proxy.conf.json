@@ -1,0 +1,8 @@
+{
+    "/api": {
+        "target": "https://admin.goldenventure.ca/api",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true,
+    }
+}

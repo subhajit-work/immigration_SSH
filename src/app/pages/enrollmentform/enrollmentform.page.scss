@@ -1,0 +1,13 @@
+
+.costom-table
+{
+    td{padding: 5px;}
+    th{text-transform: uppercase;font-weight: 600;}
+}
+.table-responsive
+{
+    .table
+    {
+        min-width: 700px;
+    }
+}

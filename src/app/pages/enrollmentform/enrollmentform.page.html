@@ -1,0 +1,464 @@
+<ion-content [scrollEvents]="true" (ionScroll)="onScrollHedearFix($event)">
+	<!-- common header show -->
+	<common-header [ngClass]="{'fix-header':isFixedHeader}"></common-header>
+
+	<!-- Sub header start -->
+	<div class="sub-header">
+		<div class="sub-header-inner">
+		  <h1>Enroll Yourself </h1>
+		  <div class="breadcrumbs"><a class="breadcrumbs_item" href="#">Home</a><span class="breadcrumbs_delimiter">|</span><span class="breadcrumbs_item current">Enroll Yourself</span></div>
+		</div>
+	</div>
+	<!-- Sub header end -->
+
+	<!-- contact us page start -->
+	<div class="associate-us-wrapper student-register-wrapper enrollForm contact-us-wrapper" >
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-xs-12 col-lg-12" [ngClass]="{'disabled': form_submit_text == 'Submitting'}" tabindex="-1">
+					<form  #enrollForm="ngForm" (ngSubmit)="onSubmit(enrollForm)" class="student-register-inner">
+						<h6>Enroll Yourself</h6>
+						<div class="row ion-padding">
+							<div class="col-xs-12 col-sm-12 col-lg-12">
+								<div class="assessment-inner">
+									<div class="row">
+                    <!-- Email -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Email : <sup>*</sup> </ion-label>
+												<ion-input placeholder="Email*" name="email" [(ngModel)]="model.email" clearInput required></ion-input>
+											</div>
+										</div>
+                    <!-- Mobile -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Mobile <sup>*</sup> </ion-label>
+												<ion-input placeholder="Mobile*" OnlyNumber="true" type="tel" minlength="10"maxlength="10" name="phone_no" [(ngModel)]="model.phone" clearInput required></ion-input>
+											</div>
+										</div>
+                    <!-- service_type -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+												<ion-label position="floating">Service Type <sup>*</sup> </ion-label>
+                        <div>
+                          <ng-select #serviceSearch
+                          [dropdownPosition]="'bottom'"
+                          placeholder="Select service type*"
+                          [items]="serviceList"
+                          bindLabel="service_name"
+                          bindValue="id"
+                          [searchable]="false"
+                          name="service_type" 
+                          [(ngModel)]="model.service_type"
+                          required>
+                          <ng-template ng-header-tmp>
+                            <!-- <input placeholder="Search" class="dropdown-custom-search" type="text" (input)="serviceSearch.filter($event.target.value)" [autofocus]="true" /> -->
+                          </ng-template>
+                          </ng-select>
+                        </div>
+										</div>
+                    <!-- name -->
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">First Name :  </ion-label>
+												<ion-input placeholder="First Name" name="first_name" [(ngModel)]="model.first_name" clearInput ></ion-input>
+											</div>
+										</div>
+                    <!-- last_name -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Last Name :  </ion-label>
+												<ion-input placeholder="Last Name" name="last_name" [(ngModel)]="model.last_name" clearInput ></ion-input>
+											</div>
+										</div>
+                    <!-- date_of_birth -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<!-- <div>
+												<ion-label position="floating">Date of Birth :  </ion-label>
+												<ion-input placeholder="Name*" name="date_of_birth" [(ngModel)]="model.date_of_birth" clearInput ></ion-input>
+											</div> -->
+                      <div >
+                        <ion-label position="floating">D.O.B </ion-label>
+                        <li-ionic4-datepicker 
+                          name="date_of_birth" 
+                          [(ngModel)]="model.date_of_birth"
+                          placeholder="Please enter D.O.B"
+                          [inputDateConfig]="datePickerObj" 
+                        ></li-ionic4-datepicker>
+                        <!-- (ngModelChange)="onDateChangeDate('dob', model.dob)" -->
+                      </div>
+										</div>
+										<!-- current_status -->
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Current Status :  </ion-label>
+												<ion-input placeholder="Enter current status" type="text" name="current_status" [(ngModel)]="model.current_status"  clearInput  ></ion-input>
+											</div>
+										</div>
+										<!-- Citizenship -->
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Citizenship  </ion-label>
+												<ion-input placeholder="Citizenship"  type="text" name="citizenship" [(ngModel)]="model.citizenship" clearInput ></ion-input>
+											</div>
+										</div>
+                    <!-- maritalStatus -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Marital Status  </ion-label>
+											  <ng-select #maritalStatusSearch
+														[loading]="selectLoading"
+														[dropdownPosition]="'bottom'"
+														placeholder="Please Select"
+														[items]="maritalStatus"
+														bindLabel="name"
+														bindValue="name"
+														[searchable]="false"
+														name="marital_status" 
+														[(ngModel)]="model.marital_status"
+														
+														>
+														<ng-template ng-header-tmp>
+															<!-- <input placeholder="Search" class="dropdown-custom-search" type="text" (input)="maritalStatusSearch.filter($event.target.value)" [autofocus]="true" /> -->
+														</ng-template>
+													</ng-select>
+											</div>
+										</div>
+                    <!-- canadian_edu_campus -->
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Canadian eduction campus  </ion-label>
+												<ion-input placeholder="Canadian eduction campus"  type="text" name="canadian_edu_campus" [(ngModel)]="model.canadian_edu_campus" clearInput ></ion-input>
+											</div>
+										</div>
+                    <!-- foreign_education -->
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Foreign education  </ion-label>
+												<ion-input placeholder="Foreign education"  type="text" name="foreign_education" [(ngModel)]="model.foreign_education" clearInput ></ion-input>
+											</div>
+										</div>
+                    <!-- current_employee -->
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Current employee  </ion-label>
+												<ion-input placeholder="Current employee"  type="text" name="current_employee" [(ngModel)]="model.current_employee" clearInput ></ion-input>
+											</div>
+										</div>
+                    <!-- blood_ralative -->
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Blood ralative  </ion-label>
+												<ion-input placeholder="Blood ralative"  type="text" name="blood_ralative" [(ngModel)]="model.blood_ralative" clearInput ></ion-input>
+											</div>
+										</div>
+                    <!-- file_type -->
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">File type :  </ion-label>
+												<ion-input placeholder="File type" name="file_type" [(ngModel)]="model.file_type" clearInput ></ion-input>
+											</div>
+										</div>
+                    <!-- gv_file -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">GV file :  </ion-label>
+												<ion-input placeholder="GV file" name="gv_file" [(ngModel)]="model.gv_file" clearInput ></ion-input>
+											</div>
+										</div>
+                    <!-- Address -->
+										<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Address  </ion-label>
+												<ion-textarea placeholder="Address"  type="text" name="address" [(ngModel)]="model.address" clearInput ></ion-textarea>
+											</div>
+										</div>
+                    <!-- Ielts -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Lelts  </ion-label>
+                        <!-- (ionChange)="addressSameorNot(model.lelts)" -->
+                        <div class="d-flex align-items-center mb-1">
+                          <div class="d-flex align-items-center">
+                            <ion-checkbox slot="end" id="lelts"  value="Yes" [checked]="uncheckCheckbox" (ionChange)="LeltsSelected($event)"></ion-checkbox>
+                            <span>&nbsp;Yes</span>
+                          </div>
+                          <div class="d-flex align-items-center ml-2">
+                            <ion-checkbox slot="end" id="lelts"  value="No" [checked]="uncheckCheckbox" (ionChange)="LeltsSelected($event)"></ion-checkbox>
+                            <span>&nbsp;No</span>
+                          </div>
+                          <div class="d-flex align-items-center ml-2">
+                            <ion-checkbox slot="end" id="lelts"  value="Listening" [checked]="uncheckCheckbox" (ionChange)="LeltsSelected($event)"></ion-checkbox>
+                            <span>&nbsp;Listening</span>
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <div class="d-flex align-items-center">
+                            <ion-checkbox slot="end" id="lelts"  value="Reading" [checked]="uncheckCheckbox" (ionChange)="LeltsSelected($event)"></ion-checkbox>
+                            <span>&nbsp;Reading</span>
+                          </div>
+                          <div class="d-flex align-items-center ml-2">
+                            <ion-checkbox slot="end" id="lelts"  value="Writing" [checked]="uncheckCheckbox" (ionChange)="LeltsSelected($event)"></ion-checkbox>
+                            <span>&nbsp;Writing</span>
+                          </div>
+                          <div class="d-flex align-items-center ml-2">
+                            <ion-checkbox slot="end" id="lelts"  value="Speaking" [checked]="uncheckCheckbox" (ionChange)="LeltsSelected($event)"></ion-checkbox>
+                            <span>&nbsp;Speaking</span>
+                          </div>
+                        </div>
+											</div>
+										</div>
+                    <!-- Medical last 1 year -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Medical last 1 year  </ion-label>
+                        <ion-radio-group  class="d-flex"  [(ngModel)]="model.medical_last_1yr" name="medical_last_1yr">
+                      
+                          <ion-item>
+                            <ion-label>Yes</ion-label>
+                            <ion-radio slot="start" value="Yes" class="ml-0"></ion-radio>
+                          </ion-item>
+                      
+                          <ion-item>
+                            <ion-label>No</ion-label>
+                            <ion-radio slot="start" value="No" ></ion-radio>
+                          </ion-item>
+                        </ion-radio-group>
+                        <!-- (ionChange)="addressSameorNot(model.lelts)" -->
+											</div>
+										</div>
+                    <!-- Biometrics -->
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mb-2">
+											<div>
+												<ion-label position="floating">Biometrics  </ion-label>
+                        <!-- (ionChange)="addressSameorNot(model.lelts)" -->
+                        <ion-radio-group  class="d-flex"  [(ngModel)]="model.biometrics" name="biometrics">
+                          <ion-item>
+                            <ion-label>Yes</ion-label>
+                            <ion-radio slot="start" value="Yes" class="ml-0"></ion-radio>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label>No</ion-label>
+                            <ion-radio slot="start" value="No" ></ion-radio>
+                          </ion-item>
+                        </ion-radio-group>
+											</div>
+										</div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                      <h3 class="mb-2 font-weight-bold">Travel History</h3>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                      <div class="table-responsive costom-table">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>From</th>
+                              <th>To</th>
+                              <th>CITY</th>
+                              <th>Country</th>
+                              <th>Reason</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="from1" [(ngModel)]="travel_history.from1" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="to1" [(ngModel)]="travel_history.to1" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="city1" [(ngModel)]="travel_history.city1" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="country1" [(ngModel)]="travel_history.country1" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="reason1" [(ngModel)]="travel_history.reason1" clearInput ></ion-input>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="from2" [(ngModel)]="travel_history.from2" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="to2" [(ngModel)]="travel_history.to2" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="city2" [(ngModel)]="travel_history.city2" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="country2" [(ngModel)]="travel_history.country2" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="reason2" [(ngModel)]="travel_history.reason2" clearInput ></ion-input>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="from3" [(ngModel)]="travel_history.from3" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="to3" [(ngModel)]="travel_history.to3" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="city3" [(ngModel)]="travel_history.city3" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="country3" [(ngModel)]="travel_history.country3" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="reason3" [(ngModel)]="travel_history.reason3" clearInput ></ion-input>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="from4" [(ngModel)]="travel_history.from4" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="to4" [(ngModel)]="travel_history.to4" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="city4" [(ngModel)]="travel_history.city4" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="country4" [(ngModel)]="travel_history.country4" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="reason4" [(ngModel)]="travel_history.reason4" clearInput ></ion-input>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="from5" [(ngModel)]="travel_history.from5" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="to5" [(ngModel)]="travel_history.to5" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="city5" [(ngModel)]="travel_history.city5" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="country5" [(ngModel)]="travel_history.country5" clearInput ></ion-input>
+                                </div>
+                              </td>
+                              <td>
+                                <div>
+                                  <ion-input   type="text" name="reason5" [(ngModel)]="travel_history.reason5" clearInput ></ion-input>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+								</div>
+							</div>
+						</div>
+						<div class="submit-button-wrapper">
+							<div class="row ion-padding">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ion-text-center">
+									<div class="custom-btn">
+										<!-- <ion-button class="reload clear-form" size="default" fill="clear" tooltip="Clear" flow="up" (click)="reloadPageAlert()">
+											
+											Clear
+										</ion-button> -->
+										<ion-button class="submit w-fit" size="default"
+										type="submit" 
+										expand="block"
+										[disabled]="!enrollForm.valid"
+										tooltip="Submit" flow="up">
+										<ion-spinner name="crescent" *ngIf="form_submit_text == 'Submitting'"></ion-spinner> 
+										  <span class="submitText">{{form_submit_text}}</span>
+										</ion-button>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+					
+		</div>
+	</div>
+	<!-- contact us page start -->
+
+	<div class="gmap_canvas">
+		<iframe
+		width="100%"
+		height="500"
+		id="gmap_canvas"
+		src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2889.396257930889!2d-79.74335918450406!3d43.59829037912314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b6a803907af0f%3A0xc37b61e6d9b99f1e!2s2000%20Argentia%20Rd%2C%20Mississauga%2C%20ON%20L5N%201W1%2C%20Canada!5e0!3m2!1sen!2sin!4v1645786365798!5m2!1sen!2sin"
+		frameborder="0"
+		scrolling="no"
+		marginheight="0"
+		marginwidth="0"            >
+		</iframe>
+		<style>
+		.mapouter {
+			position: relative;
+			text-align: right;
+			height: 500px;
+			width: 100%;
+		}
+
+		.gmap_canvas {
+			overflow: hidden;
+			background: none !important;
+			height: 500px;
+			width: 100%;
+		}
+		</style>
+	</div>
+
+	<!-- common footer show -->
+	<common-footer></common-footer>
+</ion-content>
